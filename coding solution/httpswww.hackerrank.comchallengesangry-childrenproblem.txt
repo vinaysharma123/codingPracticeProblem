@@ -1,0 +1,14 @@
+int maxMin(int k, vector<int> arr) {
+     long long int mini=INT_MAX;        //sliding window of k element 
+     long long int diff;                 // store min diff within each sliding window 
+     long long int l =arr.size();
+    sort(arr.begin(),arr.end());
+    for(int i=0;i<=l-k;i++)
+    {     diff=arr[i+k-1]-arr[i]; 
+           if(diff<mini)
+              mini=diff;
+              
+        
+    }
+    return mini;
+}

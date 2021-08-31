@@ -1,0 +1,50 @@
+int longestIncreasingSubsequence(vector<int> arr) {
+  int l=arr.size();
+   int seq=0;
+    int dp[l];
+    for(int i=0;i<l;i++)                   //o(n^2)  fail for large testcases;
+     dp[i]=1;                               //initilaize dp array with 1   
+      for(int i=0;i<l-1;i++)
+      {
+          for(int j=i+1;j<l;j++)
+           {
+               if(arr[j]>arr[i])                //traverse all elemnt from i+1 and increment the dp[j] by 1
+                  {
+                      if(dp[j]==dp[i] )            // the largest value in dp array give longest increasing sequence
+                         dp[j]++;
+                  }
+           }
+      }
+         for(int j=0;j<l;j++)
+            seq=max(seq,dp[j]);
+     
+     return seq;
+     
+     }
+
+
+ //another solution of o(nlogn)
+
+class Solution {
+public:                               
+    int lengthOfLIS(vector<int> &nums) {
+         int size=nums.size();
+          vector<int>v;
+        int j=1;
+         v.push_back(nums[0]);       //o(nlogn)
+        for(int i=1;i<size;i++)     //lowerbound take log(n)               
+        {
+            if(v[j-1]<nums[i])                    //check element in nums> v element then push in v
+            { v.push_back(nums[i]);               //otherwise check first greater elemtent than nums[i] in v and replace with nums[i]
+             j++;
+            }
+            else
+            {
+ auto k =lower_bound(v.begin(), v.end(), nums[i]);//return pointer pointing to index of first elemnt >=nums[i]  
+                 //v.insert(v.begin()+k,nums[i]);
+                v[k-v.begin()]=nums[i];
+            }
+        }
+        return v.size(); 
+    }
+};

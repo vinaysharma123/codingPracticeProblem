@@ -1,0 +1,99 @@
+
+bool cycledetect(vector<int>v[], int src,bool vis[], bool rec[])
+{  
+     if(vis[src]==false)
+     {
+        vis[src]=true;
+        rec[src]=true;
+         for(auto i : v[src])
+         {
+              if(!vis[i] && cycledetect(v,i,vis,rec))                   //foreach vertices mark it visited and do dfs with adjacent vertices
+                   return true;                                          //maintain rec for all vertices visited in a path 
+                else if(rec[i])      //check the vertice is already visited and in path from source                    
+                return true;             //cycle detected 
+         }
+     }
+     rec[src]=false;                                             //after the vertice visited and there is no cycle from source make it unvisited and remove from path
+     return false;                                                   //return false as no cycle detected     
+      
+}
+
+
+
+int Solution::solve(int A, vector<vector<int> > &B) {
+ int flag=0;
+ vector<int>v[A+1];
+bool visited[A+1]={0};
+bool rec[A+1]={0};
+   for(int i=0;i<B.size();i++)
+   {
+        
+            v[B[i][0]].push_back(B[i][1]);
+   }
+
+   for(int i=0;i<A;i++)                                       //for disconnected directed graph traverse all vertices
+   {   
+       if(cycledetect(v,i,visited,rec))
+          {
+           return 1;
+          }
+   }
+   return 0;
+    }
+
+
+
+
+
+
+
+
+
+method 2
+
+
+bool cycledetect(vector<int>v[], int src,bool vis[], bool rec[])
+{  
+     
+     if(vis[src]==false)
+     {
+        vis[src]=true;
+       // rec[src]=true;
+         for(auto i : v[src])
+         {                                                                //here we cant track the vertices in cycle .
+              if(!vis[i] && cycledetect(v,i,vis,rec))
+                   return true;
+               else if(vis[i])
+                return true;    
+               // else if(rec[i])
+               // return true;
+         }
+     }
+    // rec[src]=false;
+         vis[src]=false;
+     return false;
+      
+}
+
+
+
+int Solution::solve(int A, vector<vector<int> > &B) {
+ int flag=0;
+ vector<int>v[A+1];
+bool visited[A+1]={0};
+bool rec[A+1]={0};
+   for(int i=0;i<B.size();i++)
+   {
+        
+            v[B[i][0]].push_back(B[i][1]);
+   }
+
+   for(int i=0;i<A;i++)
+   {   
+       if(cycledetect(v,i,visited,rec))
+          {
+           return 1;
+          }
+   }
+   return 0;
+    }

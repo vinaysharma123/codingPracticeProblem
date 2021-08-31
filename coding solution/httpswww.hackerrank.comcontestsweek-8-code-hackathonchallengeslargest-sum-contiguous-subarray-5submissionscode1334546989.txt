@@ -1,0 +1,40 @@
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+long long int maxSubArraySum(long long int a[], long long int size)
+{
+   long int max_so_far = a[0];
+   long int curr_max = a[0];
+ 
+   for (long long int i = 1; i < size; i++)     //while iterating check if current element is greater than currmax+ a[i] 
+   {
+        curr_max = max(a[i], curr_max+a[i]);
+        max_so_far = max(max_so_far, curr_max);// take max of (currmax ,maxsofar) 
+   }
+   return max_so_far;
+}
+ 
+/* Driver program to test maxSubArraySum */
+int main()
+{ long long int n,c;
+ c=0;
+     cin>>n;
+   long long int a[n]; 
+     for(long long int i=0;i<n;i++)
+     { cin>>a[i];
+      if(a[i]<0)
+          c++;
+      
+     }
+   long long int max_sum = maxSubArraySum(a, n);
+   
+    if(c==n)
+         cout<<"Invalid Input";
+ else
+   cout << max_sum;
+   return 0;
+}

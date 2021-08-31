@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+#include<queue>
+using namespace std;
+
+void BFS(vector<int>v[], int source, bool visited[])
+{
+     int level[4]={0};
+    queue<int>q;
+    q.push(source);
+     while(!q.empty())                  // push every node to queue
+     {   int temp=q.front();             // visted array =true for node visited
+          visited[temp]=true;                 
+          cout<<temp<<" ";
+          q.pop();
+          for(auto i: v[temp])
+          {
+               if(!visited[i])             //if not visited push to queue
+              {visited[i]=true;
+              level[i]=level[temp]+1;           // level for particular node=level of parent +1;
+              q.push(i);
+                
+              }
+              
+          }
+         
+     }
+      cout<<"\n";
+      for ( int i=0;i<4;i++)
+         cout<<"node "<<i<< "at level "<<level[i]<<"\n";
+}
+ void addEdge(vector<int>v[], int s,int d)
+ {
+     v[s].push_back(d);
+     v[d].push_back(s);
+ }
+ int main()
+ {
+      
+     int n=4;
+     bool visited[n]={0};   //visited array to track of node visited
+      vector<int>v[n];
+     addEdge(v,0, 1);
+    addEdge(v,0, 2);
+    addEdge(v,1, 2);
+    addEdge(v,2, 0);
+    addEdge(v,2, 3);
+    addEdge(v,3, 3);
+ 
+    cout << "Following is Breadth First Traversal "
+         << "(starting from vertex 2) \n";
+     BFS(v,2, visited);
+     return 0;
+     
+ }

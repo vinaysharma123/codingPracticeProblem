@@ -1,0 +1,73 @@
+#include<bits/stdc++.h>
+#include<queue>
+#include<map>
+using namespace std;
+
+struct Node {
+    Node* left;
+    Node* right;
+    int hd;                   // store horizontal distance for every node 
+    int data;                   //root node has 0 value , left node=current node dis-1, right node dis=current node+1
+ };
+// function to create a new node
+Node* newNode(int key)
+{
+    Node* node = new Node();
+    node->left = node->right = NULL;
+    node->data = key;
+    return node;
+}
+ void topView(Node * root) {
+     queue<Node*>q;
+     root->hd=0;
+      int d;
+      map<int,int>m;                //  maintain key=horizonatal distance and value is node data;
+      q.push(root);
+      m[root->hd]=root->data;      //do level order traversal 
+      cout<<root->data<<" ";       //  cacluate horizontal dis for every node 
+      while(!q.empty())           //check if hd is key or not 
+      {                           // if not then add this key 
+          Node* temp= q.front();
+          q.pop();
+          if(temp->left!=NULL)
+          {
+              temp->left->hd=temp->hd-1; 
+               d=temp->left->hd;
+                q.push(temp->left);
+              if(m.count(d)==0)                 // if key not key found  count return 0;
+               { cout<<temp->left->data<<" ";
+               m[d]=temp->left->data;
+               }
+                
+              
+          }
+          if(temp->right!=NULL)
+          {
+              temp->right->hd=temp->hd+1;
+               d=temp->right->hd;
+                q.push(temp->right);
+              if(m.count(d)==0)
+                {cout<<temp->right->data<<" ";
+                  m[d]=temp->right->data;
+                }
+                
+              
+          }
+      }
+
+    }
+ 
+
+int main() {
+  
+   Node* root = newNode(1);
+    root->left = newNode(2);
+    root->right = newNode(3);
+    root->left->right = newNode(4);
+    root->left->right->right = newNode(5);
+    root->left->right->right->right = newNode(6);
+    cout << "Following are nodes in top view of Binary "
+            "Tree\n";
+    topView(root);
+    return 0;
+}
